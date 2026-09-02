@@ -1,0 +1,25 @@
+{
+  "rules": {
+    "rooms": {
+      "$roomCode": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    },
+
+    "secrets": {
+      "$roomCode": {
+        "round": {
+          ".read": "auth != null && (root.child('rooms/' + $roomCode + '/phase').val() === 'reveal' || root.child('rooms/' + $roomCode + '/phase').val() === 'scoreupdate' || root.child('rooms/' + $roomCode + '/phase').val() === 'final' || root.child('rooms/' + $roomCode + '/phase').val() === 'gacha')",
+          ".write": "auth != null"
+        },
+        "players": {
+          "$uid": {
+            ".read": "auth != null && (auth.uid === $uid || root.child('rooms/' + $roomCode + '/phase').val() === 'reveal' || root.child('rooms/' + $roomCode + '/phase').val() === 'scoreupdate' || root.child('rooms/' + $roomCode + '/phase').val() === 'final' || root.child('rooms/' + $roomCode + '/phase').val() === 'gacha')",
+            ".write": "auth != null"
+          }
+        }
+      }
+    }
+  }
+}
